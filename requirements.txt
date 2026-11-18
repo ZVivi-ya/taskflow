@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+sqlalchemy>=2.0,<3.0
+email-validator
+pwdlib[argon2]
+PyJWT
+pytest
+httpx
+pytest-cov
+python-dotenv
+alembic

@@ -1,0 +1,42 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: taskflow:1.0
+    container_name: taskflow-api
+
+    ports:
+      - "8000:8000"
+
+    environment:
+      APP_ENV: ${APP_ENV:?APP_ENV must be set to development or production}
+      DATABASE_URL: sqlite:////app/data/taskflow.db
+      ALLOW_SQLITE_IN_PRODUCTION: ${ALLOW_SQLITE_IN_PRODUCTION:-false}
+      DEBUG: ${DEBUG:-false}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:?JWT_SECRET_KEY must be set in .env}
+      JWT_EXPIRE_MINUTES: ${JWT_EXPIRE_MINUTES:-30}
+      CORS_ORIGINS: ${CORS_ORIGINS:?CORS_ORIGINS must be configured}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+
+    volumes:
+      - taskflow_data:/app/data
+
+    command: ["sh","-c","alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health/ready', timeout=5)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  taskflow_data:
+    external: true
+    name: ${TASKFLOW_VOLUME_NAME:-taskflow_data}

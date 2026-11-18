@@ -1,0 +1,60 @@
+# ==============================
+# Environment variables and secrets
+# ==============================
+.env
+.env.*
+!.env.example
+
+# ==============================
+# Python cache
+# ==============================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ==============================
+# Python virtual environments
+# ==============================
+.venv/
+venv/
+env/
+
+# ==============================
+# SQLite databases and local data
+# ==============================
+*.db
+*.sqlite
+*.sqlite3
+
+# ==============================
+# Database backups and experiment data
+# ==============================
+backups/
+backup/
+*.bak
+*.backup
+
+# ==============================
+# Test and coverage cache
+# ==============================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ==============================
+# IDE and editor files
+# ==============================
+.vscode/
+.idea/
+
+# ==============================
+# Operating system files
+# ==============================
+.DS_Store
+Thumbs.db
+
+# ==============================
+# Application logs
+# ==============================
+*.log
+logs/
